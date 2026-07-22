@@ -51,8 +51,8 @@ Halaman **[Bukti Terverifikasi](docs/screenshots/05-bukti.png)** membiarkan siap
 
 Setiap laporan yang dikunci menghasilkan memo `solumkm:v1:<sha256>` di devnet.
 Contoh transaksi terverifikasi:
-`5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw`
-→ lihat di [Solana Explorer (devnet)](https://explorer.solana.com/tx/5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw?cluster=devnet).
+`5NkqWH9vDkByCxBSZdh5VKFKbLwjvL8noaQfhRNqMgZSGoYayfj5Dn1qfmWitkVdVi92GXyvApCttsMzHNiPUv5n`
+→ lihat di [Solana Explorer (devnet)](https://explorer.solana.com/tx/5NkqWH9vDkByCxBSZdh5VKFKbLwjvL8noaQfhRNqMgZSGoYayfj5Dn1qfmWitkVdVi92GXyvApCttsMzHNiPUv5n?cluster=devnet).
 
 Atau cek sendiri tanpa perlu masuk di halaman **[Bukti Terverifikasi](https://solumkm.vercel.app/bukti)** —
 tempel signature transaksi dan lihat sidik laporannya dibaca langsung dari jaringan Solana.

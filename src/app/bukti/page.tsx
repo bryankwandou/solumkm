@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 // A known sample anchor already written to devnet — lets any visitor (including
 // jurors) see a real, verifiable record without logging in or creating data.
 const SAMPLE_SIGNATURE =
-  "5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw";
+  "5NkqWH9vDkByCxBSZdh5VKFKbLwjvL8noaQfhRNqMgZSGoYayfj5Dn1qfmWitkVdVi92GXyvApCttsMzHNiPUv5n";
 
 export default function ProofPage() {
   return (

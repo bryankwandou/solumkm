@@ -120,7 +120,7 @@ Akun demo sudah berisi transaksi contoh sehingga fitur bisa langsung dinilai.
 * **Repositori (publik):** https://github.com/bryankwandou/solumkm
 * **Aplikasi live:** https://solumkm.vercel.app
 * **Contoh bukti on-chain (devnet):** transaksi memo `solumkm:v1:<sha256>` , 
-  [lihat di Solana Explorer](https://explorer.solana.com/tx/5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw?cluster=devnet).
+  [lihat di Solana Explorer](https://explorer.solana.com/tx/5NkqWH9vDkByCxBSZdh5VKFKbLwjvL8noaQfhRNqMgZSGoYayfj5Dn1qfmWitkVdVi92GXyvApCttsMzHNiPUv5n?cluster=devnet).
 * **Data real-time, bukan dummy:** seluruh transaksi tersimpan di Neon Postgres
   dan ringkasan dihitung ulang setiap saat; verifikasi berjalan di jaringan
   Solana yang sebenarnya.
