@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Copy, Loader2, Megaphone, RefreshCw, Share2, Sparkles } from "lucide-react";
+import { Copy, Globe, Loader2, Megaphone, RefreshCw, Share2, Sparkles } from "lucide-react";
 import { useAuthToken } from "@/hooks/use-auth";
 import { requestJson, HttpError } from "@/services/http";
 
@@ -11,6 +11,12 @@ type AIMarketingResult = {
   hashtags: string[];
   deskripsiSingkat: string;
   ajakan: string;
+};
+
+type ExportResult = {
+  en: { title: string; description: string };
+  ar: { title: string; description: string };
+  zh: { title: string; description: string };
 };
 
 export function MarketingClient() {
@@ -24,6 +30,32 @@ export function MarketingClient() {
   const [error, setError] = useState("");
   const [result, setResult] = useState<AIMarketingResult | null>(null);
   const [copied, setCopied] = useState("");
+
+  // Export listing (EN/AR/ZH) so a maker can reach buyers abroad.
+  const [exportResult, setExportResult] = useState<ExportResult | null>(null);
+  const [loadingExport, setLoadingExport] = useState(false);
+
+  async function handleExport() {
+    if (!token || !namaProduk.trim()) {
+      setError("Isi nama produk dulu untuk membuat versi ekspor.");
+      return;
+    }
+    setError("");
+    setLoadingExport(true);
+    setExportResult(null);
+    try {
+      const data = await requestJson<ExportResult>("/api/ai/export", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ namaProduk: namaProduk.trim() }),
+      });
+      setExportResult(data);
+    } catch (err) {
+      setError(err instanceof HttpError ? err.message : "Gagal membuat versi ekspor. Coba lagi.");
+    } finally {
+      setLoadingExport(false);
+    }
+  }
 
   useEffect(() => {
     if (ready && !token) {
@@ -166,7 +198,52 @@ export function MarketingClient() {
                   </>
                 )}
               </button>
+
+              <button
+                type="button"
+                className="button button-secondary full-width"
+                onClick={handleExport}
+                disabled={loadingExport}
+              >
+                {loadingExport ? (
+                  <>
+                    <Loader2 aria-hidden="true" size={18} className="spin" />
+                    Menerjemahkan...
+                  </>
+                ) : (
+                  <>
+                    <Globe aria-hidden="true" size={18} />
+                    Versi Ekspor (EN / Arab / Mandarin)
+                  </>
+                )}
+              </button>
             </form>
+
+            {exportResult && (
+              <div style={{ display: "grid", gap: "10px", marginTop: "14px" }}>
+                {([
+                  ["English", exportResult.en],
+                  ["العربية", exportResult.ar],
+                  ["中文", exportResult.zh],
+                ] as const).map(([lang, val]) => (
+                  <div className="item-card" key={lang}>
+                    <div className="item-card-head">
+                      <h3 style={{ margin: 0 }}>{lang}</h3>
+                      <button
+                        className="button button-secondary"
+                        style={{ minHeight: "32px", padding: "0 10px", fontSize: "0.8rem" }}
+                        onClick={() => copyToClipboard(`${val.title}\n\n${val.description}`, `exp-${lang}`)}
+                      >
+                        <Copy size={13} />
+                        {copied === `exp-${lang}` ? "Tersalin" : "Salin"}
+                      </button>
+                    </div>
+                    <p style={{ margin: "0 0 4px", fontWeight: 700, color: "var(--foreground)" }}>{val.title}</p>
+                    <p style={{ margin: 0, fontSize: "0.92rem" }}>{val.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
           {/* RESULT */}

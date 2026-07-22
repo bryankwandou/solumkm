@@ -182,6 +182,47 @@ Output HARUS JSON:
   }
 }
 
+export type AIExportOutput = {
+  en: { title: string; description: string };
+  ar: { title: string; description: string };
+  zh: { title: string; description: string };
+};
+
+/**
+ * Turns one Indonesian product into export-ready listings in English, Arabic,
+ * and Mandarin so a maker can reach buyers abroad without knowing the language.
+ */
+export async function generateExportListing(input: {
+  namaProduk: string;
+  detail?: string;
+}): Promise<AIExportOutput> {
+  const prompt = `
+Produk UMKM Indonesia:
+Nama: ${input.namaProduk}
+Detail: ${input.detail || "(tidak ada detail tambahan)"}
+
+Buat listing produk siap ekspor dalam 3 bahasa. Output HARUS JSON:
+{
+  "en": { "title": "judul menarik dalam Bahasa Inggris", "description": "deskripsi 2-3 kalimat Bahasa Inggris" },
+  "ar": { "title": "judul dalam Bahasa Arab", "description": "deskripsi 2-3 kalimat Bahasa Arab" },
+  "zh": { "title": "judul dalam Bahasa Mandarin (Hanzi)", "description": "deskripsi 2-3 kalimat Bahasa Mandarin" }
+}`;
+
+  const raw = await generateContent(
+    "Kamu penerjemah dan copywriter ekspor untuk produk UMKM Indonesia. Selalu output JSON valid.",
+    prompt,
+  );
+  try {
+    return JSON.parse(extractJson(raw)) as AIExportOutput;
+  } catch {
+    return {
+      en: { title: input.namaProduk, description: `${input.namaProduk}, a quality local product from Indonesia.` },
+      ar: { title: input.namaProduk, description: `${input.namaProduk}، منتج محلي عالي الجودة من إندونيسيا.` },
+      zh: { title: input.namaProduk, description: `${input.namaProduk}，来自印度尼西亚的优质本地产品。` },
+    };
+  }
+}
+
 export async function generateInsights(input: AIInsightsInput): Promise<AIInsightsOutput> {
   const dataRingkas = input.transactions
     .slice(0, 20)
