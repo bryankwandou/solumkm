@@ -8,12 +8,7 @@
 
 | No | Nama | Email Dicoding |
 | :---: | :---: | :---: |
-| 1 | _(isi nama Anda)_ | _(isi email Dicoding Anda)_ |
-| 2 | | |
-| 3 | | |
-
-> Catatan: lengkapi tabel di atas sesuai data tim Anda yang terdaftar di IDCamp
-> sebelum submit.
+| 1 | Vincentius Bryan Kwandou | wall.breaker.king.commander@gmail.com |
 
 ---
 
@@ -40,16 +35,30 @@ tepercaya.
 
 ### Deskripsi Produk/Aplikasi
 
-**Solumkm** adalah *AI Business Copilot* untuk UMKM. Pemilik usaha cukup
-menceritakan transaksinya dalam bahasa Indonesia sehari-hari, diketik atau
-diucapkan, lalu AI merapikannya menjadi pembukuan, menghitung laba, dan memberi
-saran bisnis secara proaktif.
+**Solumkm** adalah asisten bisnis ber-AI untuk UMKM. Generative AI bukan
+tempelan chatbot di atas aplikasi biasa, melainkan mesin utama produk ini.
+Tiga pekerjaan inti seluruhnya digerakkan AI:
+
+1. **Memahami bahasa manusia jadi data terstruktur.** Kalimat bebas seperti
+   *"tadi siang laku ayam geprek 12 porsi, totalnya 180 ribu"* diurai AI menjadi
+   jenis, jumlah, kategori, dan tanggal yang siap masuk pembukuan, lewat teks
+   maupun suara. Tidak ada form yang harus diisi.
+2. **Menganalisis dan menegur lebih dulu.** AI membaca seluruh transaksi lalu
+   merangkum kondisi usaha dan memberi rekomendasi tindakan tanpa diminta,
+   misalnya menandai produk yang labanya turun.
+3. **Memproduksi konten dan listing.** AI menulis caption, deskripsi, dan ajakan
+   siap posting, serta menerjemahkan produk ke Inggris, Arab, dan Mandarin untuk
+   menembus pasar ekspor.
+
+Agar aman dipakai orang awam, hasil bacaan AI selalu ditampilkan untuk
+dikonfirmasi dan bisa dikoreksi sebelum disimpan, sehingga tidak ada angka yang
+masuk tanpa persetujuan pemilik.
 
 Untuk menjawab masalah kepercayaan, setiap laporan final dapat "dikunci" dengan
 sidik digital (SHA-256) yang dicatat permanen ke jaringan **Solana (devnet)**.
 Dengan begitu, laporan bisa dibuktikan keasliannya oleh siapa pun tanpa harus
 mempercayai database kami, sebuah *verifiable business record*. Positioning-nya
-tegas: **AI adalah produknya, blockchain adalah lapisan kepercayaan.** Di
+tegas: **AI adalah produknya, blockchain hanya lapisan kepercayaan.** Di
 antarmuka, pengguna hanya melihat tanda **"Terverifikasi"**; istilah teknis
 seperti hash dan wallet sengaja disembunyikan agar tetap ramah untuk pengguna
 non-teknis.
@@ -64,9 +73,12 @@ non-teknis.
 **Fitur utama**
 
 * **Pencatatan transaksi dengan bahasa alami**, ketik atau **ucapkan** (suara), AI memilah jenis, jumlah, kategori, dan tanggal secara otomatis.
+* **Konfirmasi sebelum simpan**, hasil bacaan AI ditampilkan untuk dicek dan dikoreksi dulu, jadi tidak ada salah catat yang lolos diam-diam.
 * **Dashboard keuangan real-time**, omzet, pengeluaran, dan laba bersih dihitung ulang langsung dari database nyata (bukan data dummy).
 * **Wawasan AI proaktif**, AI merangkum kondisi usaha dan memberi rekomendasi tindakan, tanpa perlu ditanya.
 * **Studio konten pemasaran**, menghasilkan caption, hashtag, deskripsi, dan ajakan siap posting untuk Instagram/WhatsApp/Shopee/Tokopedia.
+* **Ekspor multi-bahasa**, deskripsi produk otomatis dalam Inggris, Arab, dan Mandarin untuk menembus pasar internasional.
+* **Unduh laporan (CSV)**, riwayat transaksi bisa diunduh sebagai spreadsheet untuk dibawa ke bank atau akuntan.
 * **Verifiable business record**, mengunci sidik SHA-256 laporan ke Solana devnet; hasilnya dapat dicek publik di Solana Explorer.
 
 **Teknologi**
@@ -112,8 +124,20 @@ Akun demo sudah berisi transaksi contoh sehingga fitur bisa langsung dinilai.
 * **Data real-time, bukan dummy:** seluruh transaksi tersimpan di Neon Postgres
   dan ringkasan dihitung ulang setiap saat; verifikasi berjalan di jaringan
   Solana yang sebenarnya.
-* **Rencana pengembangan:** OCR foto struk, integrasi WhatsApp untuk pencatatan
-  dari chat, dan migrasi anchoring ke Solana mainnet dengan biaya disponsori.
+* **Model bisnis & prospek startup:** Solumkm gratis untuk UMKM demi mendorong
+  adopsi dan mengumpulkan rekam jejak transaksi yang terverifikasi. Sumber
+  pendapatan justru di sisi **B2B**: rekam jejak terverifikasi itu ditawarkan
+  sebagai API *credit scoring* berbasis data alternatif kepada penyalur KUR,
+  BPR, dan platform P2P lending (seperti Amartha atau Investree) yang butuh cara
+  menilai kelayakan kredit UMKM tanpa riwayat bank. Dengan begitu yang membayar
+  adalah pemberi pinjaman, bukan pemilik warung, sehingga pertanyaan "siapa yang
+  mau bayar" punya jawaban yang masuk akal dan model ini bisa diskalakan menjadi
+  bisnis besar. Bila kelak ada tier premium untuk UMKM (misalnya ekspor multi
+  marketplace), pembayarannya lewat rail lokal yang sudah mereka kenal seperti
+  QRIS, bukan kripto, agar tetap ramah pengguna non-teknis.
+* **Rencana pengembangan produk:** OCR foto struk, integrasi WhatsApp untuk
+  pencatatan dari chat, dan migrasi anchoring ke Solana mainnet dengan biaya
+  disponsori.
 
 > **Catatan integritas:** aplikasi ini orisinal dan dibangun untuk challenge ini;
 > belum pernah menjadi pemenang tantangan lain. Klaim kemitraan tidak
