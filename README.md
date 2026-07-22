@@ -22,6 +22,18 @@ of MSMEs with Generative AI**.
 Akun ini sudah berisi transaksi contoh sehingga dashboard, wawasan AI, dan
 tombol verifikasi bisa langsung dicoba.
 
+## Tampilan
+
+| Beranda | Catat transaksi (AI) |
+|---|---|
+| ![Beranda Solumkm](docs/screenshots/01-landing.png) | ![Catat transaksi](docs/screenshots/02-catat-transaksi.png) |
+
+| Dashboard | Buat konten pemasaran |
+|---|---|
+| ![Dashboard](docs/screenshots/03-dashboard.png) | ![Buat konten](docs/screenshots/04-buat-konten.png) |
+
+Halaman **[Bukti Terverifikasi](docs/screenshots/05-bukti.png)** membiarkan siapa pun mengecek keaslian catatan langsung di jaringan Solana, tanpa perlu masuk.
+
 ## Alur produk
 
 1. **Cerita apa adanya**, ketik atau ucapkan, mis. *"jual ayam geprek 12 porsi 180rb hari ini"*.
