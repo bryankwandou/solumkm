@@ -1,130 +1,85 @@
-# 🚀 UMKM Pintar — Asisten AI untuk Usaha Kecil Indonesia
+# Solumkm — AI Business Copilot untuk UMKM
 
-Platform Generative AI yang membantu pelaku UMKM Indonesia membuat konten pemasaran, mencatat keuangan, dan menganalisis bisnis — cukup dengan bahasa Indonesia sehari-hari.
+**Usaha kecil naik kelas. Tanpa ribet.**
 
-Dibangun untuk **IDCamp Developer Challenge #2: Digitalization & Acceleration of MSMEs with Generative AI**.
+Catat penjualan pakai bahasa sehari-hari (diketik atau diucapkan), biarkan AI
+merapikan pembukuan dan memberi saran bisnis. Laporan penting bisa dikunci
+permanen di blockchain agar angkanya bisa dibuktikan apa adanya.
 
----
+Dibangun untuk **IDCamp Developer Challenge #2 — Digitalization & Acceleration
+of MSMEs with Generative AI**.
 
-## 🎯 Fitur Utama
+- **Live:** https://solumkm.vercel.app
+- **Repo:** https://github.com/bryankwandou/solumkm
 
-### 1. AI Marketing (Konten Pemasaran Otomatis)
-- Generate caption Instagram, WhatsApp, Shopee, Tokopedia
-- Hashtag rekomendasi otomatis
-- Deskripsi produk + CTA (ajakan beli)
-- Copy ke clipboard & share langsung ke WhatsApp
-- **Input**: Nama produk + pilih platform + gaya bahasa
-- **AI Model**: Google Gemini 2.0 Flash
+## Coba langsung (akun demo juri)
 
-### 2. AI Keuangan (Pencatatan Transaksi Cerdas)
-- Catat pemasukan/pengeluaran pakai bahasa natural
-- AI otomatis kategorikan (makanan, fashion, jasa, dll)
-- Hitung total pemasukan, pengeluaran, laba bersih
-- Riwayat transaksi dengan filter & hapus
-- **Input**: "Jual nasi goreng 5 piring dapat 75rb"
+| | |
+|---|---|
+| Email | `juri@solumkm.app` |
+| Kata sandi | `solumkm2026` |
 
-### 3. Dashboard Analitik + Wawasan AI
-- Ringkasan keuangan real-time
-- Klik "Lihat Wawasan" → AI analisis data transaksi
-- Rekomendasi bisnis berdasarkan data
-- Kategori terlaris & tren grafik
-- Manajemen produk/katalog sederhana
+Akun ini sudah berisi transaksi contoh sehingga dashboard, wawasan AI, dan
+tombol verifikasi bisa langsung dicoba.
 
----
+## Alur produk
 
-## 🏗️ Tech Stack
+1. **Cerita apa adanya** — ketik atau ucapkan, mis. *"jual ayam geprek 12 porsi 180rb hari ini"*.
+2. **AI merapikan** — Groq (Llama 3.3 70B) memilah jenis, jumlah, kategori, dan tanggal.
+3. **Laporan jadi** — omzet, pengeluaran, dan laba bersih terhitung otomatis.
+4. **AI memberi saran** — tanpa diminta: apa yang naik, apa yang turun, apa yang perlu dilakukan.
+5. **Kunci permanen** — sidik SHA-256 laporan ditulis ke Solana devnet; siapa pun bisa memverifikasinya di explorer.
 
-| Teknologi | Fungsi |
-|-----------|--------|
-| **Next.js 16** (App Router) | Full-stack framework |
-| **TypeScript 6** | Type safety |
-| **Tailwind CSS 4** | Styling (cartoon brutalist UMKM) |
-| **Google Gemini AI** (gemini-2.0-flash) | Generative AI engine |
-| **Neon PostgreSQL** | Database production |
-| **JWT + bcrypt** | Authentication |
-| **framer-motion** | Animasi UI |
-| **lucide-react** | Ikon |
+## Kenapa AI *dan* blockchain
 
----
+- **AI adalah produknya.** Ia yang mencatat, menghitung, dan menyarankan — bukan sekadar menjawab pertanyaan.
+- **Blockchain adalah lapisan kepercayaan.** Catatan yang gampang diedit susah dipercaya saat mengajukan pinjaman. Sidik digital yang dianchor ke Solana membuat laporan bisa dibuktikan tanpa harus percaya pada database kami. Di UI hanya muncul tanda **Terverifikasi** — hash, wallet, dan RPC disembunyikan.
 
-## 🚀 Cara Menjalankan
+## Bukti on-chain (contoh)
 
-### Prasyarat
-- Node.js 18+
-- PostgreSQL (Neon atau lokal)
-- Google Gemini API Key ([dapatkan di sini](https://aistudio.google.com/apikey))
+Setiap laporan yang dikunci menghasilkan memo `solumkm:v1:<sha256>` di devnet.
+Contoh transaksi terverifikasi:
+`5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw`
+→ lihat di [Solana Explorer (devnet)](https://explorer.solana.com/tx/5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw?cluster=devnet).
 
-### Setup
+## Teknologi
+
+| Lapisan | Pilihan |
+|---|---|
+| Frontend | Next.js 16 (App Router), React 19, Framer Motion |
+| Bahasa | TypeScript |
+| AI | Groq — Llama 3.3 70B (OpenAI-compatible) |
+| Suara | Web Speech API (`id-ID`), tanpa API key |
+| Integritas | SHA-256 via Web Crypto |
+| Blockchain | Solana devnet (SPL Memo program), `@solana/web3.js` |
+| Database | Neon Postgres (`pg`) |
+| Auth | JWT (jose) + bcrypt |
+| Hosting | Vercel |
+
+## Menjalankan lokal
+
 ```bash
 npm install
-cp .env.example .env
-# Isi DATABASE_URL, JWT_SECRET, GEMINI_API_KEY
+cp .env.example .env    # lalu isi nilainya
 npm run dev
 ```
 
-Buka `http://localhost:3000`
-
----
-
-## 📦 Project Structure
+Variabel lingkungan yang dibutuhkan:
 
 ```
-src/
-├── app/
-│   ├── api/
-│   │   ├── ai/
-│   │   │   ├── marketing/route.ts   # Generate konten marketing
-│   │   │   ├── finance/route.ts     # Catat transaksi + list
-│   │   │   └── insights/route.ts    # Analisis bisnis AI
-│   │   └── auth/...                 # Login/register JWT
-│   ├── ai-marketing/page.tsx        # Halaman AI Marketing
-│   ├── ai-finance/page.tsx          # Halaman AI Keuangan
-│   ├── dashboard/page.tsx           # Dashboard UMKM
-│   └── login/ & register/          # Autentikasi
-├── components/
-│   ├── ai-marketing/                # UI generator konten
-│   ├── ai-finance/                  # UI catat transaksi
-│   ├── dashboard/                   # Dashboard + AI insights
-│   ├── auth/                        # Login/register forms
-│   ├── landing/                     # Landing page UMKM
-│   └── layout/                      # Header navigasi
-├── lib/
-│   ├── ai.ts                        # Wrapper Gemini (marketing, finance, insights)
-│   ├── auth.ts                      # JWT authentication
-│   ├── db.ts                        # PostgreSQL connection
-│   └── jwt.ts                       # Token management
-└── services/                        # Client-side API calls
+DATABASE_URL=          # Postgres (Neon)
+JWT_SECRET=            # string acak panjang
+GROQ_API_KEY=          # https://console.groq.com
+GROQ_MODEL=llama-3.3-70b-versatile
+SOLANA_RPC_URL=https://api.devnet.solana.com
+SOLANA_SECRET_KEY=     # kunci devnet (base58 / hex / JSON array)
 ```
 
----
+## Status & peta jalan
 
-## 🔑 Environment Variables
+Sudah jalan: pencatatan AI (teks & suara), dashboard real-time dari database
+nyata, wawasan AI, generator konten pemasaran, dan penguncian laporan ke Solana
+devnet yang benar-benar terverifikasi on-chain.
 
-```bash
-DATABASE_URL=postgresql://...   # Neon PostgreSQL URL
-JWT_SECRET=random-string-here
-GEMINI_API_KEY=AIza...          # Google Gemini API key
-```
-
----
-
-## 📝 Kriteria Penilaian IDCamp
-
-| Kriteria | Bobot | Implementasi |
-|----------|-------|-------------|
-| **Inovasi & Kebaruan** | 20% | AI paham bahasa natural Indonesia, 3 fitur terintegrasi |
-| **Kesesuaian Tema** | 30% | Semua fitur pakai Generative AI untuk UMKM |
-| **Manfaat Masyarakat** | 25% | Akses gratis, mobile-friendly, Bahasa Indonesia |
-| **Desain & UX** | 25% | Cartoon brutalist, user-friendly untuk non-teknis |
-
----
-
-## 🙏 Dukungan
-
-- **IDCamp** / Dicoding Indonesia
-- **Google Gemini AI**
-- **Neon** serverless PostgreSQL
-
----
-
-*Dibangun dengan ❤️ untuk UMKM Indonesia*
+Berikutnya: OCR foto struk, integrasi WhatsApp, dan migrasi anchoring ke
+mainnet dengan biaya yang disponsori.
