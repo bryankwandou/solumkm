@@ -3,6 +3,7 @@
 import type { PointerEvent } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { HeroCanvas } from "./hero-canvas";
 import {
   ArrowRight,
   BarChart3,
@@ -135,6 +136,7 @@ export function LandingClient() {
     <main className="site-main">
       {/* ------------------------------------------------------------- HERO */}
       <section className="hero-section">
+        <HeroCanvas />
         <div className="container hero-layout">
           <motion.div
             className="hero-copy"

@@ -452,7 +452,27 @@ h3 {
 /* ------------------------------------------------------------------ hero */
 
 .hero-section {
+  position: relative;
   padding: 64px 0 24px;
+}
+
+/* Ambient particle backdrop — sits behind hero content, never intercepts
+   pointer or scroll, and fades toward the edges so text stays crisp. */
+.hero-canvas {
+  position: absolute;
+  inset: -40px 0 auto 0;
+  z-index: 0;
+  width: 100%;
+  height: 560px;
+  pointer-events: none;
+  opacity: 0.9;
+  -webkit-mask-image: radial-gradient(120% 90% at 60% 20%, #000 40%, transparent 80%);
+  mask-image: radial-gradient(120% 90% at 60% 20%, #000 40%, transparent 80%);
+}
+
+.hero-section .hero-layout {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-layout {
