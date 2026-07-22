@@ -17,7 +17,10 @@ export async function POST(request: Request) {
   const email = String(body.email).trim().toLowerCase();
   const password = String(body.password);
 
-  if (!email.includes("@")) {
+  // A real address, not just anything containing "@" — rejects junk like
+  // "a@b' OR 1=1--" that loose validation would otherwise store as a user.
+  const emailOk = /^[^\s@"'`;]+@[^\s@"'`;]+\.[^\s@"'`;]+$/.test(email) && email.length <= 254;
+  if (!emailOk) {
     return NextResponse.json({ message: "Format email belum benar." }, { status: 400 });
   }
 
