@@ -530,6 +530,20 @@ h3 {
   display: grid;
   gap: 10px;
   padding: 16px;
+  transform-style: preserve-3d;
+}
+
+/* Lift the AI reply toward the viewer so it floats above the card during the
+   pointer tilt, adding real depth rather than a flat rotation. Mouse-only:
+   touch devices never tilt, so the depth would only risk a scaling artifact. */
+@media (hover: hover) and (pointer: fine) {
+  .chat-in {
+    transform: translateZ(34px);
+  }
+
+  .chat-out {
+    transform: translateZ(18px);
+  }
 }
 
 .chat-row {

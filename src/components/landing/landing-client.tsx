@@ -1,7 +1,8 @@
 "use client";
 
+import type { PointerEvent } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
@@ -107,6 +108,29 @@ export function LandingClient() {
 
   const spring = { type: "spring" as const, stiffness: 120, damping: 20 };
 
+  // Pointer-driven 3D tilt for the hero card. Raw pointer offset feeds two
+  // springs so the motion settles smoothly; disabled entirely under
+  // prefers-reduced-motion so it never fights accessibility.
+  const tiltX = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
+  const tiltY = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
+  const rotateX = useTransform(tiltX, (v) => (reduceMotion ? 0 : v));
+  const rotateY = useTransform(tiltY, (v) => (reduceMotion ? 0 : v));
+
+  function handleTilt(event: PointerEvent<HTMLDivElement>) {
+    // Mouse only: touch drags should scroll the page, not tilt the card.
+    if (reduceMotion || event.pointerType !== "mouse") return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
+    tiltY.set(px * 12); // horizontal pointer → rotate around Y
+    tiltX.set(py * -12); // vertical pointer → rotate around X
+  }
+
+  function resetTilt() {
+    tiltX.set(0);
+    tiltY.set(0);
+  }
+
   return (
     <main className="site-main">
       {/* ------------------------------------------------------------- HERO */}
@@ -121,14 +145,15 @@ export function LandingClient() {
           >
             <p className="section-kicker">
               <Sparkles aria-hidden="true" size={13} />
-              AI Business Copilot untuk UMKM
+              Asisten bisnis ber-AI untuk UMKM
             </p>
 
             <h1>Cerita jualanmu. Sisanya biar AI yang kerjakan.</h1>
 
             <p className="hero-lead">
-              Tulis satu kalimat biasa, dan pembukuanmu langsung rapi, laba terhitung, saran bisnis
-              muncul sendiri. Catatan yang sudah final dikunci supaya angkanya bisa dibuktikan.
+              Tulis satu kalimat biasa. Pembukuan langsung rapi, laba ikut terhitung, dan saran
+              bisnis muncul dengan sendirinya. Kalau laporan sudah pas, kamu bisa menguncinya supaya
+              angkanya tidak bisa diubah diam-diam.
             </p>
 
             <div className="hero-actions">
@@ -150,12 +175,16 @@ export function LandingClient() {
             </p>
           </motion.div>
 
-          {/* Preview: the copilot taking action, not answering a question. */}
+          {/* Preview: the copilot taking action, not answering a question.
+              Tilts toward the pointer in 3D for a tactile, live feel. */}
           <motion.div
             className="product-visual"
             initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...spring, delay: TIMING.visual }}
+            onPointerMove={handleTilt}
+            onPointerLeave={resetTilt}
+            style={{ rotateX, rotateY, transformPerspective: 1100, transformStyle: "preserve-3d" }}
           >
             <div className="visual-toolbar">
               <span />
@@ -313,7 +342,7 @@ export function LandingClient() {
       <section className="container system-section" id="fitur">
         <div className="section-heading">
           <p className="section-kicker">Yang dikerjakan AI</p>
-          <h2>Bukan chatbot yang menunggu ditanya. Ini asisten yang mengerjakan.</h2>
+          <h2>Bukan chatbot yang cuma menunggu ditanya. Ini asisten yang benar-benar bekerja.</h2>
         </div>
 
         <div className="feature-grid">
