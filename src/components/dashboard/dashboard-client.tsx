@@ -306,7 +306,7 @@ export function DashboardClient() {
           </p>
           <h1>Ini kondisi usahamu hari ini.</h1>
           <p>
-            Angka di bawah dihitung ulang dari transaksi yang benar-benar kamu catat — bukan
+            Angka di bawah dihitung ulang dari transaksi yang benar-benar kamu catat, bukan
             contoh. Minta AI membacanya kapan pun kamu butuh saran.
           </p>
         </div>

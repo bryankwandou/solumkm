@@ -17,13 +17,13 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Solumkm — AI Business Copilot untuk UMKM Indonesia",
+  title: "Solumkm: Asisten Bisnis Ber-AI untuk UMKM Indonesia",
   description:
-    "Catat penjualan pakai bahasa sehari-hari, biarkan AI merapikan pembukuan dan memberi saran bisnis. Catatan penting bisa diverifikasi agar tidak bisa diubah diam-diam.",
+    "Catat penjualan pakai bahasa sehari-hari, diketik atau diucapkan. AI merapikan pembukuan dan memberi saran bisnis, dan catatan penting bisa dikunci supaya tidak bisa diubah diam-diam.",
   applicationName: "Solumkm",
   keywords: ["UMKM", "AI", "pembukuan", "asisten bisnis", "Indonesia"],
   openGraph: {
-    title: "Solumkm — AI Business Copilot untuk UMKM",
+    title: "Solumkm: Asisten Bisnis Ber-AI untuk UMKM",
     description: "Usaha kecil naik kelas. Tanpa ribet.",
     locale: "id_ID",
     type: "website",

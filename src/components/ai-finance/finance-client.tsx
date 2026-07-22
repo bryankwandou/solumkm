@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowDownCircle, ArrowUpCircle, Loader2, Mic, Sparkles, Square, Trash2, Wallet } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, Download, Loader2, Mic, Sparkles, Square, Trash2, Wallet } from "lucide-react";
 import { useAuthToken } from "@/hooks/use-auth";
 import { useVoiceInput } from "@/hooks/use-voice-input";
 import { requestJson, HttpError } from "@/services/http";
@@ -105,6 +105,24 @@ export function FinanceClient() {
   }
 
   const formatRupiah = (n: number) => `Rp${n.toLocaleString("id-ID")}`;
+
+  // Download the whole history as a spreadsheet the owner can hand to a bank or
+  // accountant. Quotes are escaped so a keterangan with commas stays intact.
+  function exportCsv() {
+    if (transactions.length === 0) return;
+    const esc = (v: string | number) => `"${String(v).replace(/"/g, '""')}"`;
+    const header = ["Tanggal", "Jenis", "Kategori", "Keterangan", "Jumlah"];
+    const rows = transactions.map((t) =>
+      [t.tanggal?.slice(0, 10) ?? "", t.jenis, t.kategori, t.keterangan, t.jumlah].map(esc).join(","),
+    );
+    const csv = "﻿" + [header.map(esc).join(","), ...rows].join("\r\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `solumkm-transaksi-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   const totalPemasukan = transactions
     .filter((t) => t.jenis === "pemasukan")
@@ -237,9 +255,22 @@ export function FinanceClient() {
                 <p className="section-kicker">Riwayat</p>
                 <h2>Transaksi terbaru.</h2>
               </div>
-              <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
-                {transactions.length} catatan
-              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <p style={{ color: "var(--muted)", fontSize: "0.9rem", margin: 0 }}>
+                  {transactions.length} catatan
+                </p>
+                {transactions.length > 0 && (
+                  <button
+                    type="button"
+                    className="button button-secondary"
+                    onClick={exportCsv}
+                    style={{ minHeight: "36px", padding: "0 12px", fontSize: "0.85rem" }}
+                  >
+                    <Download aria-hidden="true" size={15} />
+                    Unduh CSV
+                  </button>
+                )}
+              </div>
             </div>
 
             {loadingList ? (

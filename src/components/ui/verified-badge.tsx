@@ -81,7 +81,7 @@ export function VerifiedBadge({ reference, anchor, anchoring, onAnchor, label = 
         <div className="verify-detail" id={detailId} role="region" aria-label="Detail verifikasi">
           <p>
             Isi {label} dikunci dengan sidik digital. Bila angkanya diubah, sidik ini tidak akan
-            cocok lagi — jadi catatanmu bisa dibuktikan apa adanya.
+            cocok lagi, jadi catatanmu bisa dibuktikan apa adanya.
           </p>
           {anchor ? (
             <p style={{ margin: "0 0 8px" }}>

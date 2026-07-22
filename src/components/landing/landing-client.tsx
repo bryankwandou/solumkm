@@ -40,13 +40,13 @@ const capabilities = [
   {
     icon: Bell,
     title: "Menegur duluan",
-    desc: 'AI yang bicara lebih dulu: "penjualan mie ayam turun 28% dari minggu lalu" — tanpa kamu harus bertanya.',
+    desc: 'AI yang bicara lebih dulu, tanpa kamu harus bertanya: "penjualan mie ayam turun 28% dari minggu lalu".',
 
   },
   {
     icon: PenTool,
     title: "Menulis promosi",
-    desc: "Caption Instagram, deskripsi Shopee, dan balasan WhatsApp yang sopan — siap tempel dalam hitungan detik.",
+    desc: "Caption Instagram, deskripsi Shopee, dan balasan WhatsApp yang sopan, siap tempel dalam hitungan detik.",
 
   },
   {
@@ -95,7 +95,7 @@ const faq = [
   },
   {
     q: "Datanya nyata atau contoh?",
-    a: "Nyata. Setiap transaksi yang kamu catat tersimpan di database dan dihitung ulang langsung — bukan angka contoh yang ditulis di dalam kode.",
+    a: "Nyata. Setiap transaksi yang kamu catat tersimpan di database dan dihitung ulang langsung, bukan angka contoh yang ditulis di dalam kode.",
   },
 ];
 
@@ -197,7 +197,7 @@ export function LandingClient() {
 
             <div className="token-strip">
               <Mic aria-hidden="true" size={16} />
-              <span>Ketik atau ucapkan — bahasa sehari-hari sudah cukup</span>
+              <span>Ketik atau ucapkan, bahasa sehari-hari sudah cukup</span>
             </div>
 
             <div className="chat-mock" aria-label="Contoh percakapan dengan asisten">
@@ -270,7 +270,7 @@ export function LandingClient() {
               punya laporan yang bisa ditunjukkan.&rdquo;
             </blockquote>
             <p className="story-attrib">
-              Cerita yang terdengar di hampir semua warung — pencatatan ada, tapi tidak bisa
+              Cerita yang terdengar di hampir semua warung. Pencatatan ada, tapi tidak bisa
               dipakai saat dibutuhkan.
             </p>
           </div>
@@ -377,7 +377,7 @@ export function LandingClient() {
           <p>
             Saat mengajukan pinjaman atau menunjukkan pembukuan ke calon mitra, angka yang bisa
             diketik ulang kapan saja tidak berarti banyak. Solumkm mengunci laporan yang sudah
-            final dengan sidik digital — kalau isinya diubah, sidiknya tidak akan cocok lagi.
+            final dengan sidik digital. Kalau isinya diubah, sidiknya tidak akan cocok lagi.
           </p>
           <p style={{ marginBottom: 0 }}>
             Kamu tidak perlu tahu cara kerjanya. Di layar, yang muncul hanya satu tanda:{" "}
