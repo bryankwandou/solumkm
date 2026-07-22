@@ -22,6 +22,8 @@ export const metadata: Metadata = {
     "Catat penjualan pakai bahasa sehari-hari, diketik atau diucapkan. AI merapikan pembukuan dan memberi saran bisnis, dan catatan penting bisa dikunci supaya tidak bisa diubah diam-diam.",
   applicationName: "Solumkm",
   keywords: ["UMKM", "AI", "pembukuan", "asisten bisnis", "Indonesia"],
+  // Required by Dicoding to verify ownership of a Web-platform submission.
+  other: { "dicoding:email": "wall.breaker.king.commander@gmail.com" },
   openGraph: {
     title: "Solumkm: Asisten Bisnis Ber-AI untuk UMKM",
     description: "Usaha kecil naik kelas. Tanpa ribet.",
