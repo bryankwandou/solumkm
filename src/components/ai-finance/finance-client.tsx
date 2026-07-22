@@ -28,6 +28,11 @@ export function FinanceClient() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Draft the AI proposed, held for the owner to confirm or correct before it
+  // is written. Null means we are back at the free-text input step.
+  type Draft = { jenis: string; jumlah: number; kategori: string; keterangan: string; tanggal: string };
+  const [draft, setDraft] = useState<Draft | null>(null);
+
   const appendTranscript = useCallback((spoken: string) => {
     setText((prev) => (prev ? `${prev} ${spoken}` : spoken));
   }, []);
@@ -55,6 +60,7 @@ export function FinanceClient() {
     if (token) loadTransactions(token);
   }, [ready, token, router, loadTransactions]);
 
+  // Step 1: ask the AI to read the text, but only preview it for confirmation.
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!token) return;
@@ -68,24 +74,37 @@ export function FinanceClient() {
 
     setLoadingSave(true);
     try {
+      const data = await requestJson<{ draft: Draft }>("/api/ai/finance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ text: text.trim(), preview: true }),
+      });
+      setDraft(data.draft);
+    } catch (err) {
+      setError(err instanceof HttpError ? err.message : "Gagal membaca transaksi. Coba lagi.");
+    } finally {
+      setLoadingSave(false);
+    }
+  }
+
+  // Step 2: save the (possibly corrected) draft. The AI never writes on its own.
+  async function confirmDraft() {
+    if (!token || !draft) return;
+    setError("");
+    setLoadingSave(true);
+    try {
       await requestJson<{ message: string; transaction: Transaction }>("/api/ai/finance", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ text: text.trim() }),
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ manual: draft }),
       });
       setText("");
+      setDraft(null);
       setSuccess("Transaksi berhasil dicatat!");
       await loadTransactions(token);
       setTimeout(() => setSuccess(""), 3000);
     } catch (err) {
-      if (err instanceof HttpError) {
-        setError(err.message);
-      } else {
-        setError("Gagal mencatat. Coba lagi.");
-      }
+      setError(err instanceof HttpError ? err.message : "Gagal menyimpan. Coba lagi.");
     } finally {
       setLoadingSave(false);
     }
@@ -232,20 +251,88 @@ export function FinanceClient() {
               {error && <div className="alert error" role="alert">{error}</div>}
               {success && <div className="alert success" role="status">{success}</div>}
 
-              <button className="button button-primary full-width" type="submit" disabled={loadingSave}>
-                {loadingSave ? (
-                  <>
-                    <Loader2 aria-hidden="true" size={18} className="spin" />
-                    AI memproses...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles aria-hidden="true" size={18} />
-                    Catat Transaksi
-                  </>
-                )}
-              </button>
+              {!draft && (
+                <button className="button button-primary full-width" type="submit" disabled={loadingSave}>
+                  {loadingSave ? (
+                    <>
+                      <Loader2 aria-hidden="true" size={18} className="spin" />
+                      AI membaca...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles aria-hidden="true" size={18} />
+                      Baca dengan AI
+                    </>
+                  )}
+                </button>
+              )}
             </form>
+
+            {/* Confirmation step: the owner checks and can fix what the AI read
+                before it is saved. Nothing is written until "Simpan" is tapped. */}
+            {draft && (
+              <div className="ai-panel" style={{ marginTop: "16px" }}>
+                <h3>
+                  <Sparkles aria-hidden="true" size={16} />
+                  Cek dulu, sudah benar?
+                </h3>
+                <div className="field-group">
+                  <label htmlFor="draft-jenis">Jenis</label>
+                  <select
+                    id="draft-jenis"
+                    value={draft.jenis}
+                    onChange={(e) => setDraft({ ...draft, jenis: e.target.value })}
+                  >
+                    <option value="pemasukan">Pemasukan</option>
+                    <option value="pengeluaran">Pengeluaran</option>
+                  </select>
+                </div>
+                <div className="field-group">
+                  <label htmlFor="draft-jumlah">Jumlah (Rp)</label>
+                  <input
+                    id="draft-jumlah"
+                    type="number"
+                    inputMode="numeric"
+                    value={draft.jumlah}
+                    onChange={(e) => setDraft({ ...draft, jumlah: Number(e.target.value) || 0 })}
+                  />
+                </div>
+                <div className="field-group">
+                  <label htmlFor="draft-kategori">Kategori</label>
+                  <input
+                    id="draft-kategori"
+                    value={draft.kategori}
+                    onChange={(e) => setDraft({ ...draft, kategori: e.target.value })}
+                  />
+                </div>
+                <div className="field-group">
+                  <label htmlFor="draft-keterangan">Keterangan</label>
+                  <input
+                    id="draft-keterangan"
+                    value={draft.keterangan}
+                    onChange={(e) => setDraft({ ...draft, keterangan: e.target.value })}
+                  />
+                </div>
+                <div className="button-row" style={{ marginTop: "4px" }}>
+                  <button
+                    type="button"
+                    className="button button-primary"
+                    onClick={confirmDraft}
+                    disabled={loadingSave}
+                  >
+                    {loadingSave ? "Menyimpan..." : "Simpan"}
+                  </button>
+                  <button
+                    type="button"
+                    className="button button-secondary"
+                    onClick={() => setDraft(null)}
+                    disabled={loadingSave}
+                  >
+                    Ubah teks
+                  </button>
+                </div>
+              </div>
+            )}
           </section>
 
           {/* DAFTAR TRANSAKSI */}

@@ -13,3 +13,5 @@ build-log.txt
 dev-server.*.log
 artifacts
 cache
+
+PLANNING.md

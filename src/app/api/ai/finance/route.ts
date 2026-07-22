@@ -30,12 +30,20 @@ export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
   const text = body?.text?.trim();
   const manual = body?.manual;
+  const preview = body?.preview === true;
 
   if (!text && !manual) {
     return NextResponse.json(
       { message: "Isi teks transaksi atau data manual." },
       { status: 400 },
     );
+  }
+
+  // Preview mode: run the AI parse and return the draft WITHOUT saving, so the
+  // owner can check (and fix) what the AI understood before it hits the books.
+  if (preview && text) {
+    const draft = await generateFinanceRecord({ text });
+    return NextResponse.json({ draft });
   }
 
   try {

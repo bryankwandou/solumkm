@@ -1,10 +1,10 @@
-# Brand — Solumkm
+# Brand, Solumkm
 
-_Status: active — derived from PLANNING.md §8, adjusted for the "AI first, verification second" pivot._
+_Status: active. Positioning: AI first, verification second._
 
 ## Positioning
 
-**Solumkm adalah AI Business Copilot untuk UMKM.**
+**Solumkm adalah asisten bisnis ber-AI untuk UMKM.**
 Setiap catatan bisnis penting dapat diverifikasi agar datanya tidak bisa diubah diam-diam.
 
 - **AI is the product.** Everything a user sees leads with what the AI *did for them*.
@@ -19,13 +19,13 @@ Kalimat pendek. Aktif. Tanpa jargon teknis di permukaan.
 | Jangan tulis | Tulis |
 |---|---|
 | Transaction hash disimpan ke Solana Devnet | Catatan ini sudah terverifikasi |
-| Connect your wallet to continue | (tidak ada — wallet bersifat opsional dan tersembunyi) |
+| Connect your wallet to continue | (tidak ada, wallet bersifat opsional dan tersembunyi) |
 | Generate AI-powered content | Buatkan caption |
 | Data berhasil disubmit ke sistem | Sudah tercatat |
 
 ## Color tokens
 
-Base is a stark, near-neutral light surface — it reads professional to a non-crypto audience.
+Base is a stark, near-neutral light surface, it reads professional to a non-crypto audience.
 Exactly two accents carry meaning, and each has one job.
 
 | Token | Value | Job |
@@ -45,8 +45,8 @@ Rule: purple never means "success", green never means "AI". If a color is doing 
 
 ## Typography
 
-- **Display + body:** Plus Jakarta Sans (via `next/font/google`) — friendly geometric, reads well in Bahasa Indonesia at small sizes.
-- **Numbers + IDs:** JetBrains Mono — money figures and any technical string.
+- **Display + body:** Plus Jakarta Sans (via `next/font/google`), friendly geometric, reads well in Bahasa Indonesia at small sizes.
+- **Numbers + IDs:** JetBrains Mono, money figures and any technical string.
 - Headings run tight (`line-height: 1.04`) and heavy (`760–820`). Body stays `1.55` for readability on phones.
 
 ## Layout

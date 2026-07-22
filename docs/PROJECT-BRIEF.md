@@ -1,4 +1,4 @@
-# Project Brief — Solumkm
+# Project Brief, Solumkm
 
 **IDCamp Developer Challenge #2: Digitalization & Acceleration of MSMEs with Generative AI**
 
@@ -29,8 +29,8 @@ masalah muncul bersamaan:
    pernah benar-benar diketahui.
 2. **Catatan itu tidak bisa dipercaya pihak lain.** Ketika seorang pelaku UMKM
    ingin mengajukan pinjaman (KUR) atau menunjukkan pembukuan ke calon mitra,
-   catatan buku tulis — atau bahkan angka di spreadsheet yang bisa diketik ulang
-   kapan saja — sulit dijadikan bukti yang kredibel.
+   catatan buku tulis, atau bahkan angka di spreadsheet yang bisa diketik ulang
+   kapan saja, sulit dijadikan bukti yang kredibel.
 
 Yang terdampak adalah jutaan usaha mikro yang justru paling butuh akses
 permodalan, namun tertahan karena tidak punya rekam jejak keuangan yang rapi dan
@@ -41,14 +41,14 @@ tepercaya.
 ### Deskripsi Produk/Aplikasi
 
 **Solumkm** adalah *AI Business Copilot* untuk UMKM. Pemilik usaha cukup
-menceritakan transaksinya dalam bahasa Indonesia sehari-hari — diketik atau
-diucapkan — lalu AI merapikannya menjadi pembukuan, menghitung laba, dan memberi
+menceritakan transaksinya dalam bahasa Indonesia sehari-hari, diketik atau
+diucapkan, lalu AI merapikannya menjadi pembukuan, menghitung laba, dan memberi
 saran bisnis secara proaktif.
 
 Untuk menjawab masalah kepercayaan, setiap laporan final dapat "dikunci" dengan
 sidik digital (SHA-256) yang dicatat permanen ke jaringan **Solana (devnet)**.
 Dengan begitu, laporan bisa dibuktikan keasliannya oleh siapa pun tanpa harus
-mempercayai database kami — sebuah *verifiable business record*. Positioning-nya
+mempercayai database kami, sebuah *verifiable business record*. Positioning-nya
 tegas: **AI adalah produknya, blockchain adalah lapisan kepercayaan.** Di
 antarmuka, pengguna hanya melihat tanda **"Terverifikasi"**; istilah teknis
 seperti hash dan wallet sengaja disembunyikan agar tetap ramah untuk pengguna
@@ -63,16 +63,16 @@ non-teknis.
 
 **Fitur utama**
 
-* **Pencatatan transaksi dengan bahasa alami** — ketik atau **ucapkan** (suara), AI memilah jenis, jumlah, kategori, dan tanggal secara otomatis.
-* **Dashboard keuangan real-time** — omzet, pengeluaran, dan laba bersih dihitung ulang langsung dari database nyata (bukan data dummy).
-* **Wawasan AI proaktif** — AI merangkum kondisi usaha dan memberi rekomendasi tindakan, tanpa perlu ditanya.
-* **Studio konten pemasaran** — menghasilkan caption, hashtag, deskripsi, dan ajakan siap posting untuk Instagram/WhatsApp/Shopee/Tokopedia.
-* **Verifiable business record** — mengunci sidik SHA-256 laporan ke Solana devnet; hasilnya dapat dicek publik di Solana Explorer.
+* **Pencatatan transaksi dengan bahasa alami**, ketik atau **ucapkan** (suara), AI memilah jenis, jumlah, kategori, dan tanggal secara otomatis.
+* **Dashboard keuangan real-time**, omzet, pengeluaran, dan laba bersih dihitung ulang langsung dari database nyata (bukan data dummy).
+* **Wawasan AI proaktif**, AI merangkum kondisi usaha dan memberi rekomendasi tindakan, tanpa perlu ditanya.
+* **Studio konten pemasaran**, menghasilkan caption, hashtag, deskripsi, dan ajakan siap posting untuk Instagram/WhatsApp/Shopee/Tokopedia.
+* **Verifiable business record**, mengunci sidik SHA-256 laporan ke Solana devnet; hasilnya dapat dicek publik di Solana Explorer.
 
 **Teknologi**
 
 * Next.js 16 (App Router) + React 19 + TypeScript
-* Groq — Llama 3.3 70B (Generative AI, OpenAI-compatible)
+* Groq, Llama 3.3 70B (Generative AI, OpenAI-compatible)
 * Web Speech API untuk input suara Bahasa Indonesia (`id-ID`)
 * SHA-256 (Web Crypto) untuk sidik integritas
 * Solana devnet + `@solana/web3.js` (SPL Memo program) untuk anchoring
@@ -107,7 +107,7 @@ Akun demo sudah berisi transaksi contoh sehingga fitur bisa langsung dinilai.
 
 * **Repositori (publik):** https://github.com/bryankwandou/solumkm
 * **Aplikasi live:** https://solumkm.vercel.app
-* **Contoh bukti on-chain (devnet):** transaksi memo `solumkm:v1:<sha256>` —
+* **Contoh bukti on-chain (devnet):** transaksi memo `solumkm:v1:<sha256>` , 
   [lihat di Solana Explorer](https://explorer.solana.com/tx/5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw?cluster=devnet).
 * **Data real-time, bukan dummy:** seluruh transaksi tersimpan di Neon Postgres
   dan ringkasan dihitung ulang setiap saat; verifikasi berjalan di jaringan

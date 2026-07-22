@@ -1,7 +1,7 @@
 {
-  "name": "springboot-login-jwt",
+  "name": "solumkm",
   "version": "1.0.0",
-  "description": "Corporate energy website dummy with internal login, dashboard, and JWT flow",
+  "description": "Solumkm: asisten bisnis ber-AI untuk UMKM Indonesia. Catat penjualan dengan bahasa sehari-hari, laporan rapi otomatis, dan catatan bisa dikunci di Solana devnet.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

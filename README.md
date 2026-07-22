@@ -1,4 +1,4 @@
-# Solumkm — AI Business Copilot untuk UMKM
+# Solumkm: Asisten Bisnis Ber-AI untuk UMKM
 
 **Usaha kecil naik kelas. Tanpa ribet.**
 
@@ -6,7 +6,7 @@ Catat penjualan pakai bahasa sehari-hari (diketik atau diucapkan), biarkan AI
 merapikan pembukuan dan memberi saran bisnis. Laporan penting bisa dikunci
 permanen di blockchain agar angkanya bisa dibuktikan apa adanya.
 
-Dibangun untuk **IDCamp Developer Challenge #2 — Digitalization & Acceleration
+Dibangun untuk **IDCamp Developer Challenge #2, Digitalization & Acceleration
 of MSMEs with Generative AI**.
 
 - **Live:** https://solumkm.vercel.app
@@ -24,16 +24,16 @@ tombol verifikasi bisa langsung dicoba.
 
 ## Alur produk
 
-1. **Cerita apa adanya** — ketik atau ucapkan, mis. *"jual ayam geprek 12 porsi 180rb hari ini"*.
-2. **AI merapikan** — Groq (Llama 3.3 70B) memilah jenis, jumlah, kategori, dan tanggal.
-3. **Laporan jadi** — omzet, pengeluaran, dan laba bersih terhitung otomatis.
-4. **AI memberi saran** — tanpa diminta: apa yang naik, apa yang turun, apa yang perlu dilakukan.
-5. **Kunci permanen** — sidik SHA-256 laporan ditulis ke Solana devnet; siapa pun bisa memverifikasinya di explorer.
+1. **Cerita apa adanya**, ketik atau ucapkan, mis. *"jual ayam geprek 12 porsi 180rb hari ini"*.
+2. **AI merapikan**, Groq (Llama 3.3 70B) memilah jenis, jumlah, kategori, dan tanggal.
+3. **Laporan jadi**, omzet, pengeluaran, dan laba bersih terhitung otomatis.
+4. **AI memberi saran**, tanpa diminta: apa yang naik, apa yang turun, apa yang perlu dilakukan.
+5. **Kunci permanen**, sidik SHA-256 laporan ditulis ke Solana devnet; siapa pun bisa memverifikasinya di explorer.
 
-## Kenapa AI *dan* blockchain
+## Kenapa AI dan blockchain sekaligus
 
-- **AI adalah produknya.** Ia yang mencatat, menghitung, dan menyarankan — bukan sekadar menjawab pertanyaan.
-- **Blockchain adalah lapisan kepercayaan.** Catatan yang gampang diedit susah dipercaya saat mengajukan pinjaman. Sidik digital yang dianchor ke Solana membuat laporan bisa dibuktikan tanpa harus percaya pada database kami. Di UI hanya muncul tanda **Terverifikasi** — hash, wallet, dan RPC disembunyikan.
+- **AI adalah produknya.** Ia yang mencatat, menghitung, dan menyarankan, bukan sekadar menjawab pertanyaan.
+- **Blockchain adalah lapisan kepercayaan.** Catatan yang gampang diedit susah dipercaya saat mengajukan pinjaman. Sidik digital yang dianchor ke Solana membuat laporan bisa dibuktikan tanpa harus percaya pada database kami. Di UI hanya muncul tanda **Terverifikasi**, hash, wallet, dan RPC disembunyikan.
 
 ## Bukti on-chain (contoh)
 
@@ -48,7 +48,7 @@ Contoh transaksi terverifikasi:
 |---|---|
 | Frontend | Next.js 16 (App Router), React 19, Framer Motion |
 | Bahasa | TypeScript |
-| AI | Groq — Llama 3.3 70B (OpenAI-compatible) |
+| AI | Groq, Llama 3.3 70B (OpenAI-compatible) |
 | Suara | Web Speech API (`id-ID`), tanpa API key |
 | Integritas | SHA-256 via Web Crypto |
 | Blockchain | Solana devnet (SPL Memo program), `@solana/web3.js` |
