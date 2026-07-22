@@ -11,6 +11,7 @@ const NAV = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/ai-finance", label: "Catat Transaksi" },
   { href: "/ai-marketing", label: "Buat Konten" },
+  { href: "/bukti", label: "Bukti" },
 ];
 
 export function SiteHeader() {

@@ -1599,3 +1599,143 @@ select:focus-visible {
     width: 100%;
   }
 }
+
+/* ── Public proof page (/bukti) ─────────────────────────────────────────── */
+.proof-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 20px 96px;
+}
+.proof-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--verified);
+  background: var(--verified-soft);
+  border: 1px solid var(--verified-line);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+.proof-head h1 {
+  margin: 18px 0 10px;
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  line-height: 1.1;
+}
+.proof-head p {
+  color: var(--muted);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+.proof-form {
+  margin: 28px 0 8px;
+}
+.proof-form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted-strong);
+  margin-bottom: 8px;
+}
+.proof-input-row {
+  display: flex;
+  gap: 10px;
+}
+.proof-input-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.82rem;
+  color: var(--muted-strong);
+}
+.proof-input-row input:focus {
+  outline: 2px solid var(--verified);
+  outline-offset: 1px;
+  border-color: var(--verified);
+}
+.proof-input-row .button-primary {
+  white-space: nowrap;
+}
+.proof-result {
+  margin-top: 22px;
+  min-height: 40px;
+}
+.proof-muted {
+  color: var(--muted);
+}
+.proof-card {
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+}
+.proof-ok {
+  border-color: var(--verified-line);
+  background: var(--verified-soft);
+}
+.proof-fail {
+  border-color: var(--line-strong);
+}
+.proof-badge {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--verified);
+  margin-bottom: 16px;
+}
+.proof-badge-fail {
+  color: var(--muted-strong);
+}
+.proof-card dl {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+.proof-card dt {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.proof-card dd {
+  margin: 0;
+  color: var(--muted-strong);
+  word-break: break-all;
+}
+.proof-mono {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.82rem;
+}
+.proof-explorer {
+  display: inline-block;
+  margin-top: 18px;
+  font-weight: 600;
+  color: var(--verified);
+  text-decoration: none;
+}
+.proof-explorer:hover {
+  text-decoration: underline;
+}
+.proof-how {
+  margin: 34px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.proof-how li {
+  margin-bottom: 6px;
+}
+@media (max-width: 560px) {
+  .proof-input-row {
+    flex-direction: column;
+  }
+  .proof-input-row .button-primary {
+    width: 100%;
+  }
+}
