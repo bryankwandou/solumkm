@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authenticateRequest } from "@/lib/auth";
 import { ensureSchema, sql } from "@/lib/db";
 import { generateFinanceRecord } from "@/lib/ai";
+import { DEMO_ACCOUNT_EMAIL } from "@/constants/auth";
 
 export async function GET(request: NextRequest) {
   const authPayload = await authenticateRequest(request);
@@ -97,6 +98,14 @@ export async function DELETE(request: NextRequest) {
   const authPayload = await authenticateRequest(request);
   if (!authPayload) {
     return NextResponse.json({ message: "Silakan masuk terlebih dahulu." }, { status: 401 });
+  }
+
+  // Keep the shared demo account's sample data intact for the next reviewer.
+  if (authPayload.email === DEMO_ACCOUNT_EMAIL) {
+    return NextResponse.json(
+      { message: "Transaksi contoh pada akun demo tidak bisa dihapus. Silakan daftar akun sendiri untuk mencoba menghapus." },
+      { status: 403 },
+    );
   }
 
   const { searchParams } = new URL(request.url);

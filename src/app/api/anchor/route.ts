@@ -60,13 +60,29 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Sidik digital laporan diperlukan." }, { status: 400 });
   }
 
+  await ensureSchema();
+  await ensureAnchorTable();
+
+  // Each anchor spends a network fee from the shared devnet wallet, so cap how
+  // many times one account can anchor per day. This stops a single registrant
+  // from draining the wallet and breaking the on-chain feature for everyone.
+  const DAILY_ANCHOR_LIMIT = 20;
+  const recent = await sql<{ n: number }>`
+    SELECT COUNT(*)::int AS n FROM report_anchors
+    WHERE owner_id = ${auth.userId} AND created_at > now() - interval '24 hours'
+  `;
+  if ((recent[0]?.n ?? 0) >= DAILY_ANCHOR_LIMIT) {
+    return NextResponse.json(
+      { message: "Batas penguncian harian tercapai. Coba lagi besok." },
+      { status: 429 },
+    );
+  }
+
   const result = await anchorFingerprint(fingerprint);
   if (!result.ok) {
     return NextResponse.json({ message: result.reason }, { status: 502 });
   }
 
-  await ensureSchema();
-  await ensureAnchorTable();
   await sql`
     INSERT INTO report_anchors (id, owner_id, fingerprint, signature, cluster)
     VALUES (${crypto.randomUUID()}, ${auth.userId}, ${fingerprint}, ${result.signature}, ${result.cluster})
