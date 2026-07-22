@@ -30,6 +30,25 @@ export async function POST(request: NextRequest) {
     tanggal: String(t.tanggal).slice(0, 10),
   }));
 
+  // No transactions yet → return an honest empty state. Never hand an empty set
+  // to the model: it would hallucinate figures, which reads as fake data.
+  if (mapped.length === 0) {
+    return NextResponse.json({
+      ringkasan:
+        "Belum ada transaksi untuk dianalisis. Catat penjualan atau pengeluaran pertama Anda, lalu wawasan akan muncul di sini.",
+      totalPemasukan: 0,
+      totalPengeluaran: 0,
+      labaBersih: 0,
+      kategoriTerlaris: "-",
+      rekomendasi: [
+        "Mulai catat transaksi harian, cukup ketik atau ucapkan.",
+        "Semakin lengkap catatannya, semakin tajam wawasannya.",
+      ],
+      grafikSummary: "Belum ada data",
+      kosong: true,
+    });
+  }
+
   try {
     const insights = await generateInsights({ transactions: mapped, periode });
     return NextResponse.json(insights);
