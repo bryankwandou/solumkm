@@ -1,13 +1,12 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const apiKey = process.env.GEMINI_API_KEY;
+// AI runs on Groq — OpenAI-compatible, low latency, generous free tier — which
+// suits a UMKM assistant that must feel instant on a modest phone connection.
+const apiKey = process.env.GROQ_API_KEY;
+const GROQ_MODEL = process.env.GROQ_MODEL ?? "llama-3.3-70b-versatile";
+const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 if (!apiKey) {
-  console.warn("GEMINI_API_KEY is not set. AI features will return fallback responses.");
+  console.warn("GROQ_API_KEY is not set. AI features will return fallback responses.");
 }
-
-const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
-const model = genAI?.getGenerativeModel({ model: "gemini-2.0-flash" }) ?? null;
 
 const SYSTEM_MARKETING = `Kamu adalah asisten pemasaran digital untuk pelaku UMKM Indonesia.
 Tugasmu membantu menghasilkan konten pemasaran yang menarik, sederhana, dan mudah dipahami.
@@ -69,24 +68,38 @@ export type AIInsightsOutput = {
 };
 
 async function generateContent(systemPrompt: string, userPrompt: string): Promise<string> {
-  if (!model) {
-    return JSON.stringify({ error: "AI service belum dikonfigurasi (GEMINI_API_KEY tidak ada)" });
+  if (!apiKey) {
+    return JSON.stringify({ error: "AI service belum dikonfigurasi (GROQ_API_KEY tidak ada)" });
   }
 
   try {
-    const result = await model.generateContent({
-      contents: [
-        { role: "user", parts: [{ text: systemPrompt + "\n\n" + userPrompt }] },
-      ],
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 1024,
+    const response = await fetch(GROQ_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
       },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        temperature: 0.7,
+        max_tokens: 1024,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt },
+        ],
+      }),
     });
 
-    return result.response.text();
+    if (!response.ok) {
+      console.error("Groq API error:", response.status, await response.text().catch(() => ""));
+      return JSON.stringify({ error: "Layanan AI sedang sibuk, coba lagi nanti." });
+    }
+
+    const data = (await response.json()) as { choices?: { message?: { content?: string } }[] };
+    return data.choices?.[0]?.message?.content ?? "{}";
   } catch (error) {
-    console.error("Gemini API error:", error);
+    console.error("Groq request failed:", error);
     return JSON.stringify({ error: "Layanan AI sedang sibuk, coba lagi nanti." });
   }
 }
@@ -150,9 +163,13 @@ Output HARUS JSON:
 }`;
 
   const raw = await generateContent(SYSTEM_FINANCE, prompt);
+  const today = new Date().toISOString().slice(0, 10);
   try {
     const result = JSON.parse(extractJson(raw)) as AIFinanceOutput;
-    result.tanggal = result.tanggal || new Date().toISOString().slice(0, 10);
+    // The model is unreliable at dates and sometimes invents a past year, so we
+    // record today unless the user's text clearly names an explicit date.
+    const mentionsDate = /\b(\d{1,2}[/-]\d{1,2}|\d{4}|kemarin|kmrn|lusa|tanggal)\b/i.test(input.text);
+    result.tanggal = mentionsDate && result.tanggal ? result.tanggal : today;
     return result;
   } catch {
     return {

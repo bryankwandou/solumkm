@@ -24,7 +24,7 @@ import { logout } from "@/services/auth-client";
 import { getItems, createItem, updateItem, deleteItem, ItemDTO } from "@/services/items-client";
 import { requestJson, HttpError } from "@/services/http";
 import { fingerprint } from "@/lib/integrity";
-import { VerifiedBadge } from "@/components/ui/verified-badge";
+import { VerifiedBadge, AnchorInfo } from "@/components/ui/verified-badge";
 
 type Transaction = {
   id: string;
@@ -78,6 +78,8 @@ export function DashboardClient() {
   // Integrity fingerprint over the current books. Recomputed whenever the
   // underlying transactions change, so it always describes what is on screen.
   const [reportFingerprint, setReportFingerprint] = useState<string | null>(null);
+  const [anchor, setAnchor] = useState<AnchorInfo | null>(null);
+  const [anchoring, setAnchoring] = useState(false);
 
   const handleLogout = useCallback(async () => {
     await logout();
@@ -139,13 +141,47 @@ export function DashboardClient() {
         kategori: t.kategori,
         tanggal: t.tanggal,
       })),
-    ).then((hash) => {
-      if (active) setReportFingerprint(hash);
+    ).then(async (hash) => {
+      if (!active) return;
+      setReportFingerprint(hash);
+      setAnchor(null);
+      // If this exact report was already anchored on-chain, show that.
+      if (hash && token) {
+        try {
+          const data = await requestJson<{ anchor: AnchorInfo | null }>(
+            `/api/anchor?fingerprint=${hash}`,
+            { headers: { Authorization: `Bearer ${token}` } },
+          );
+          if (active) setAnchor(data.anchor);
+        } catch {
+          /* anchor lookup is best-effort */
+        }
+      }
     });
     return () => {
       active = false;
     };
-  }, [transactions]);
+  }, [transactions, token]);
+
+  async function anchorReport() {
+    if (!token || !reportFingerprint) return;
+    setAnchoring(true);
+    setError("");
+    try {
+      const data = await requestJson<AnchorInfo>("/api/anchor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ fingerprint: reportFingerprint }),
+      });
+      setAnchor(data);
+    } catch (err) {
+      setError(
+        err instanceof HttpError ? err.message : "Gagal mengunci laporan ke blockchain. Coba lagi.",
+      );
+    } finally {
+      setAnchoring(false);
+    }
+  }
 
   async function generateInsights() {
     if (!token) return;
@@ -315,7 +351,13 @@ export function DashboardClient() {
 
       {transactions.length > 0 && (
         <div style={{ marginBottom: "18px" }}>
-          <VerifiedBadge reference={reportFingerprint} label="laporan ini" />
+          <VerifiedBadge
+            reference={reportFingerprint}
+            anchor={anchor}
+            anchoring={anchoring}
+            onAnchor={anchorReport}
+            label="laporan ini"
+          />
         </div>
       )}
 
