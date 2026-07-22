@@ -42,6 +42,9 @@ Contoh transaksi terverifikasi:
 `5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw`
 → lihat di [Solana Explorer (devnet)](https://explorer.solana.com/tx/5qE6pVArnv7HUFWGKtRMCqZ2pYDbx2SrJ8PgsL3XcUiCBbVipj4jaqRwMVNrXtqx82KpF3haGzWhWPQVzaJyHeBw?cluster=devnet).
 
+Atau cek sendiri tanpa perlu masuk di halaman **[Bukti Terverifikasi](https://solumkm.vercel.app/bukti)** —
+tempel signature transaksi dan lihat sidik laporannya dibaca langsung dari jaringan Solana.
+
 ## Teknologi
 
 | Lapisan | Pilihan |
